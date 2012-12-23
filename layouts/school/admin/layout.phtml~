@@ -1,0 +1,2 @@
+<h2>Default layout</h2>
+<?php echo $this->layout()->content; ?>

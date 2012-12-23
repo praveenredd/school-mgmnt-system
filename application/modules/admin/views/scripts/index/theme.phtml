@@ -1,0 +1,21 @@
+<form id="theme-form" action="" method="post">
+    <div class="title">Select theme to change</div><br />
+    <select name="theme" id="theme-select">
+        <?php foreach ($this->themeOptions as $key => $val) {
+            $selected  = ($this->theme==$key)? $selectd = "selected":"";
+            ?>
+            <option <?php echo $selected; ?> value="<?php echo $key; ?>"><?php echo $val; ?></option>
+            <?php
+        }
+        ?>
+    </select>
+</form>
+<h2>Preview</h2>
+<iframe src="<?php echo $this->baseUrl(); ?>" height="500px" width="1040px"></iframe> 
+<script type="text/javascript">
+    $(document).ready(function(){
+        $("#theme-select").change(function(){
+            $("#theme-form").submit();
+        });
+    });
+</script>

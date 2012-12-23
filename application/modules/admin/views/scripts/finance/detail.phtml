@@ -1,0 +1,38 @@
+<?php $this->headLink()->appendStylesheet($this->baseUrl() . "/school/admin/css/table.css"); ?> 
+<table id="CSS_Table">
+    <tr>
+        <th>Title</th>
+        <th><?php echo $this->result['title']; ?></th>
+        <th><a style="text-decoration:none" href="<?php echo $this->url(array('controller' => 'finance', 'action' => 'list')); ?>">Back</a></th>
+    </tr>
+    <tr>
+        <th>Amount</th>
+        <td><?php echo $this->result['amount']; ?></td>
+    </tr>
+    <tr>
+        <th>Given To</th>
+        <td><?php echo $this->result['given_to']; ?></td>
+    </tr>
+    <tr>
+        <th>Reason</th>
+        <td><?php echo $this->result['reason']; ?></td>
+    </tr>
+    <tr>
+        <th>Given Date</th>
+        <td><?php echo $this->result['given_date']; ?></td>
+    </tr>
+    <tr>
+        <th>Given By</th>
+        <td><?php echo $this->result['given_by']; ?></td>
+    </tr>
+    <tr>
+        <th>Type</th>
+        <td><?php echo $this->result['type']; ?></td>
+    </tr>
+    <tr>
+        <th>Interest Rate</th>
+        <td><?php echo $this->result['interest_rate']; ?></td>
+    </tr>
+
+
+</table>

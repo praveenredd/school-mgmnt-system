@@ -1,0 +1,11 @@
+<?php $this->headLink()->appendStylesheet($this->baseUrl() . "/school/admin/css/resultsearch.css"); ?>
+<div id="dashboard">
+<?php foreach ($this->result as $result) { ?>
+    <div class="image_field">
+        <image class="field_size" src="<?php
+    echo $this->baseURL() . "/school/admin/uploads/";
+    echo $result['image_name'];
+    ?> " >  
+    </div>
+<?php } ?>
+</div>

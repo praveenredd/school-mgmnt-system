@@ -1,0 +1,173 @@
+<?php $this->headLink()->appendStylesheet($this->baseUrl() . "/school/admin/css/table.css"); ?>
+<?php
+$form = $this->form->getElements();
+?>
+<div id="exam-result-all">
+    <h2>Search Result of the Students</h2>
+    <form action="" method="post"> 
+        <div id="divdropwrapper">
+            <div class="form-item-wrapper">
+                <label>Year</label>
+                <?php echo $form['year']; ?>
+            </div>
+            <div class="form-item-wrapper">
+                <label>Class</label>
+                <?php echo $form['grade']; ?>
+            </div>
+            <div class="form-item-wrapper">
+                <label>Section</label>
+                <?php echo $form['section']; ?>
+            </div>
+            <div class="form-item-wrapper">
+                <label>Exam Type</label>
+                <?php echo $form["examtype_id"] ?>
+            </div>
+            <div class="student-info-wrapper">
+                <label>Student Info</label><br />
+                <?php echo $form['roll_no']; ?>
+                <?php echo $form["full_name"] ?>
+            </div>
+            <div class="form-item-wrapper" id="submit-wrapper">
+                <br />
+                <?php echo $form['Search']; ?> 
+            </div>
+            <div class="clear"></div>
+        </div>
+    </form>    
+    <div class="clear"></div>
+    <?php
+    if ($this->searchResults) {
+        $arr = array();
+        $subject = array();
+        foreach ($this->searchResults as $result) {
+            $key = $result['student_id'] . "::" . $result['full_name'] . "::" . $result['roll_no'];
+            $arr[$key][] = $result;
+            $subject[$result['subject_id']] = $result['subject'];
+        }
+        ?>
+        <table>
+            <tr>
+                <th>Roll No</th>
+                <th>Name</th>
+                <?php foreach ($subject as $sub) { ?>
+                    <th><?php echo $sub; ?></th>
+                <?php } ?>
+                <th>Percentage</th>
+            </tr>
+            <?php foreach ($arr as $key => $result): ?>
+                <?php $var = explode("::", $key); ?>
+                <tr>
+                    <td><?php echo $var[2]; ?> </td>
+                    <td><?php echo $var[1]; ?> </td>
+                    <?php
+                    $sum = 0;
+                    foreach ($result as $val) {
+                        $sum +=$val['marks'];
+                        ?>
+                        <td> <?php echo $val['marks']; ?></td>
+                    <?php } ?>
+                    <td><?php echo number_format($sum / sizeof($subject), 2) . "%"; ?></td>
+                </tr>
+                <?php
+            endforeach;
+            ?>
+        </table>
+    <?php } elseif ($this->searchoneResult) { ?>
+        <?php
+        $first = $this->searchoneResult[0];
+        $sum = 0;
+        $i = 0;
+        ?>
+        <div class="student-info">
+            <div class="info-item">Name  :  <?php echo $first['full_name']; ?></div>
+            <div class="info-item">Roll no  :  <?php echo $first['roll_no']; ?></div>
+            <div class="info-item">Exam  : <?php echo $first['name']; ?></div>
+            <div class="clear"></div>
+        </div>
+        <table>
+            <tr>
+                <th>Subjects</th>
+                <th>Full Marks</th>
+                <th>Pass Marks</th>
+                <th>Obtained Marks</th>
+                <th>Remarks</th>
+            </tr>
+            <?php
+            $isPassed = true;
+            foreach ($this->searchoneResult as $result) {
+                ?>
+                <?php
+                $sum +=$result['marks'];
+                $i++;
+                if ($result['marks'] < $result['pass_marks']) {
+                    $isPassed = false;
+                }
+                ?>
+                <tr>
+                    <td><?php echo $result['subject']; ?></td>
+                    <td><?php echo $result['full_marks']; ?></td>
+                    <td><?php echo $result['pass_marks']; ?></td>
+                    <td>
+                        <?php
+                        echo $result['marks'];
+                        echo ($result['pass_marks'] > $result['marks']) ? " *" : " ";
+                        ?>
+                    </td>
+                    <td><?php echo $result['remarks']; ?></td>
+                </tr>
+            <?php } ?>
+            <tr>
+                <td colspan="2">
+                    &nbsp;
+                </td>
+                <td>
+                    <?php echo "Grand Total : " . $sum; ?>
+                </td>
+                <td>
+                    <?php
+                    $average = number_format($sum / $i, 2);
+                    echo ($isPassed) ? "Passed with $average%" : "Failed";
+                    ?>
+                </td>
+                <td>
+                    <?php
+                    if ($isPassed) {
+                        if ($average < 45) {
+                            $div = "Third Division";
+                        } elseif ($average < 60) {
+                            $div = "Second Division";
+                        } elseif ($average < 80) {
+                            $div = "First Division";
+                        } elseif ($average > 80 && $average <= 100) {
+                            $div = "Distinction";
+                        }
+                    }
+                    ?>
+                </td>
+            </tr>
+        </table>
+    <?php
+    } else {
+        echo "<h3> No result found</h3>";
+    }
+    ?>
+</div> 
+<?php echo $this->headScript()->appendFile($this->baseUrl() . "/school/admin/js/studentautocomplete.js"); ?>
+<script type="text/javascript">
+    $(document).ready(function() {
+        $('#grade').live("change", function() {
+            var grade = $("#grade").val();
+            $.ajax({
+                dataType: 'json',
+                method: 'post',
+                data: '&grade=' + grade,
+                url: site.baseUrl + '/admin/result/exam-type-option/format/json',
+                success: function(res) {
+                    $("#exam_type").replaceWith(res.html);
+                }
+            });
+        });
+   
+    });
+    
+</script>

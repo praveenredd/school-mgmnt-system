@@ -1,0 +1,23 @@
+<div id="search-dashboard">
+    <form action="<?php echo $this->baseUrl() . '/admin/menu/content-search'; ?>" method="post">
+        <div id="all-search-wrapper">
+            <div id="search-field-wrapper">
+                <input type="text" name="searchtext" placeholder="Search Content or Navigation" id="search-all-content"/>
+            </div>
+            <div id="search-type-wrapper">
+                <select name="menu_type" id="menu-type">
+                    <option value="menu">Navigation</option>
+                    <option value="content">Content</option>
+                </select>
+            </div>
+            <div id="search-submit-wrapper">
+                <input type="submit" id="search-submit" name="submit" value="Search"/>
+            </div>
+            <div class="clear"></div>
+        </div>
+    </form>
+    <div id="search-result">
+
+    </div>
+</div>
+<?php $this->headScript()->appendFile($this->baseUrl() . '/school/admin/js/content-search.js'); ?>

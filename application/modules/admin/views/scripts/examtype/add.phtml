@@ -1,0 +1,18 @@
+<fieldset>
+    <legend><h2>Add Exam Type</h2></legend>
+    <?php
+    echo $this->form; 
+    ?>
+</fieldset>
+<script type="text/javascript">
+    $(document).ready(function() {
+        $("#grade-all").click(function() {
+            if ($(".add-form-checkbox:not(#grade-all)").is(":checked")) {
+                $(".add-form-checkbox").removeAttr('checked');
+            } else {
+                $(".add-form-checkbox").attr("checked", "checked");
+            }
+
+        });
+    });
+</script>

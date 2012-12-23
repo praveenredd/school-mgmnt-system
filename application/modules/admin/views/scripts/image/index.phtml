@@ -1,0 +1,23 @@
+<?php $this->headLink()->appendStylesheet($this->baseUrl() . "/school/admin/css/table.css"); ?>
+<table id="CSS_Table">
+    <tr>
+        <th>Image ID</th>
+        <th>Gallery Name</th>
+        <th>Image</th>
+        <th>Edit</th>
+        <th>Delete</th>
+    </tr>
+    <?php foreach ($this->result as $result): ?>
+        <tr>
+            <td><?php echo $result['image_id']; ?></td>
+            <td><?php echo $result['gallery_name']; ?></td>
+            <td><img height="40" width="60" src="<?php echo $this->baseURL() . "/school/admin/uploads/";echo $result['image_name']; ?> "></td>
+            <td>
+                <a href="<?php echo $this->url(array('controller' => 'image', 'action' => 'edit', 'id' => $result['image_id'])); ?>">Edit </a>
+            </td>
+            <td>
+                <a href="<?php echo $this->url(array('controller' => 'image', 'action' => 'delete', 'id' => $result['image_id'])); ?>">Delete</a>
+            </td>
+        </tr>
+<?php endforeach; ?>
+</table>

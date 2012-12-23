@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html class=" js canvas canvastext geolocation crosswindowmessaging no-websqldatabase no-indexeddb hashchange historymanagement draganddrop websockets rgba hsla multiplebgs backgroundsize borderimage borderradius boxshadow opacity cssanimations csscolumns cssgradients no-cssreflections csstransforms no-csstransforms3d csstransitions  video audio localstorage sessionstorage webworkers applicationcache svg smil svgclippaths   fontface"><head>
+        <title>Greenwich Academy</title>
+        <meta name="description" content="website description">
+        <meta name="keywords" content="website keywords, website keywords">
+        <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+        <link rel="stylesheet" type="text/css" href="<?php echo $this->baseUrl() . '/school/default/css/style.css'; ?>">
+        <!-- modernizr enables HTML5 elements and feature detects -->
+        <script type="text/javascript" src="<?php echo $this->baseUrl() . '/school/default/js/modernizr-1.js' ?>"></script>
+    </head>
+
+    <body>
+        <div id="main">
+            <header>
+                <div id="logo">
+                    <div id="logo_text">
+                        <!-- class="logo_colour", allows you to change the colour of the text -->
+                        <h1>Greenwich<span class="logo_colour">Academy</span></h1>
+                        <h2></h2>
+                    </div>
+                </div>
+
+                <nav>
+                    <ul class="sf-menu" id="nav">
+                        <?php
+                        $menuModel = new Admin_Model_Menu;
+                        echo $partial = $menuModel->fetchHierarchy();
+                        ?>
+                </nav>
+            </header>
+            <div id="site_content">
+                <ul style="width: 940px; height: 300px;" id="images">
+                    <li style="left: 0px; margin: 0px; position: absolute; width: 134.609px; display: block;"><img src="<?php echo $this->BaseUrl() . '/school/default/images/1.jpg' ?>" alt="seascape_one" height="300" width="600"></li>
+                    <li style="left: 136.609px; margin: 0px; position: absolute; width: 134.609px;"><img src="<?php echo $this->BaseUrl() . '/school/default/images/2.jpg' ?>" alt="seascape_two" height="300" width="600"></li>
+                    <li class="active" style="left: 273.217px; margin: 0px; position: absolute; width: 256.957px; overflow: hidden; display: block;"><img src="<?php echo $this->BaseUrl() . '/school/default/images/3.jpg' ?>" alt="seascape_three" height="300" width="600"></li>
+                    <li style="left: 532.174px; margin: 0px; position: absolute; width: 134.609px;"><img src="<?php echo $this->BaseUrl() . '/school/default/images/4.jpg' ?>" alt="seascape_four" height="300" width="600"></li>
+                    <li class="" style="left: 668.783px; margin: 0px; position: absolute; overflow: hidden; width: 134.609px; display: block;"><img src="<?php echo $this->BaseUrl() . '/school/default/images/5.jpg' ?>" alt="seascape_five" height="300" width="600"></li>
+                    <li class="" style="right: 0px; margin: 0px; position: absolute; width: 134.609px; overflow: hidden; display: block;"><img src="<?php echo $this->BaseUrl() . '/school/default/images/6.jpg' ?>" alt="seascape_seascape" height="300" width="600"></li>
+                </ul>
+                <div id="sidebar_container">
+                    <div class="sidebar">
+                        <h3>Latest News</h3>
+                        <?php
+                        $newsModel = new Admin_Model_News;
+                        $partial = $newsModel->listAll();
+                        foreach ($partial as $result):
+                            ?>
+                            <h4><?php echo $result['title']; ?></h4>
+                            <h5><?php echo $result['update_date']; ?> </h5>
+                            <p><?php echo $result['content']; ?><br><a href="#">Read more</a></p>
+                        <?php endforeach; ?> 
+                    </div>
+                </div>
+                <div class="content">
+                    <?php echo $this->layout()->content; ?>
+                </div>
+            </div>
+            <footer>
+                <small> Copyright Â© Fourfox.inc <a href="http://www.css3templates.co.uk/"></a></small>
+            </footer>
+        </div>
+        <p>&nbsp;</p>
+        <!-- javascript at the bottom for fast page loading -->
+        <script type="text/javascript" src="<?php echo $this->baseUrl() . '/school/default/js/jquery_002.js'; ?>"></script>
+        <script type="text/javascript" src="<?php echo $this->baseUrl() . '/school/default/js/jquery.js'; ?>"></script>
+        <script type="text/javascript" src="<?php echo $this->baseUrl() . '/school/default/js/jquery_004.js'; ?>"></script>
+        <script type="text/javascript" src="<?php echo $this->baseUrl() . '/school/default/js/jquery_003.js'; ?>"></script>
+        <script type="text/javascript">
+            $(document).ready(function() {
+                $('#images').kwicks({
+                    max : 600,
+                    spacing : 2
+                });
+                $('ul.sf-menu').sooperfish();
+            });
+        </script>
+
+
+    </body></html>

@@ -1,0 +1,28 @@
+<?php $this->headLink()->appendStylesheet($this->baseUrl() . "/school/admin/css/table.css"); ?>
+<table id="CSS_Table">
+    <tr>
+        <th> Exam ID </th>
+        <th> Name        </th>
+        <th> Grade     </th>
+        <th> Full Marks            </th>
+        <th> Pass Marks </th>
+        <th>Edit</th>
+        <th>Delete</th>
+    </tr>
+    <?php foreach ($this->result as $result): ?>
+
+        <tr>
+            <td><?php echo $result['examtype_id']; ?></td>
+            <td><?php echo $result['name']; ?></td>
+            <td><?php echo $result['grade']; ?></td>
+            <td><?php echo $result['full_marks']; ?></td>
+            <td><?php echo $result['pass_marks']; ?></td>
+            <td>
+                <a href="<?php echo $this->url(array('controller' => 'examtype', 'action' => 'edit', 'id' => $result['examtype_id'])); ?>">Edit </a>
+            </td>
+            <td>
+                <a href="<?php echo $this->url(array('controller' => 'examtype', 'action' => 'delete', 'id' => $result['examtype_id'])); ?>">Delete</a>
+            </td>
+        </tr>
+    <?php endforeach; ?>
+</table>

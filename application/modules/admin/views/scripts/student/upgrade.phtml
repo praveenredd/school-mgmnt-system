@@ -1,0 +1,69 @@
+<?php $this->headLink()->appendStylesheet($this->baseUrl() . "/school/admin/css/table.css"); ?> 
+<?php $form = $this->form->getElements(); ?>
+<h2>Search Student to Upgrade Class</h2>
+<form action="" method="post"> 
+    <div id="divdropwrapper">
+        <div class="search-item-wrapper">
+            <label>Year</label>
+            <?php echo $form['year']; ?>
+        </div>
+        <div class="search-item-wrapper">
+            <label>Class</label>
+            <?php echo $form['grade']; ?>
+        </div>
+        <div class="search-item-wrapper">
+            <label>Section</label>
+            <?php echo $form['section']; ?>
+        </div>
+        <div class="search-item-wrapper">
+            <br />
+            <?php echo $form['Search']; ?> 
+        </div>
+        <div class="clear"></div>
+    </div>
+</form>    
+<form action="" method="post">
+    <?php if ($this->searchResults) { ?>
+        <table>
+            <tr>
+                <th>
+                    Roll No
+                </th>
+                <th>
+                    Full Name
+                </th>
+                <th>
+                    <a href="#" id="checkbox-all" name="all-checkbox">Check All</a>
+                </th>
+                <th>
+                    New Roll No
+                </th>
+            </tr>
+            <?php foreach ($this->searchResults as $result) { ?>
+                <tr>
+                    <td><?php echo $result['roll_no']; ?></td>
+                    <td><?php echo $result['full_name']; ?></td>  
+                    <td><input class="check-student" type="checkbox" name="student[<?php echo $result['student_id'] ?>]" /></td>
+                    <td><input type="text" name="new_roll_no[<?php echo $result['student_id'] ?>]"value="<?php echo $result['roll_no']; ?>" ></td>  
+                </tr>
+            <?php } ?>
+        </table>
+        <input type="hidden" name="year" value="<?php echo $_POST['year']; ?>" />
+        <input type="hidden" name="grade" value="<?php echo $_POST['grade']; ?>" />
+        <input type="hidden" name="section" value="<?php echo $_POST['section']; ?>" />
+        <input type="submit" name="form-submit" value="Upgrade Class" />
+
+    <?php } ?>
+</form>
+<script type="text/javascript">
+    $(document).ready(function() {
+        $("#checkbox-all").click(function() {
+            if ($(".check-student").is(":checked")) {
+                $(".check-student").removeAttr('checked');
+            } else {
+                $(".check-student").attr("checked", "checked");
+            }
+
+        });
+    });
+</script>

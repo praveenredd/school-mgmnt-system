@@ -1,0 +1,27 @@
+<table align="right" width="100%" border="1px solid black">
+    <tr>
+        <th> Salary ID        </th>
+        <th> Staff ID   </th>
+        <th> Monthly Salary        </th>
+        <th> Amount </th>
+        <th> Due </th>
+        <th>Edit</th>
+        <th>Delete</th>
+    </tr>
+    <?php foreach ($this->result as $result): ?>
+
+        <tr>
+            <td><?php echo $result['salary_id']; ?></td>
+            <td><?php echo $result['staff_name']; ?></td>
+            <td><?php echo $result['month']; ?></td>
+            <td><?php echo $result['amount']; ?></td>
+            <td><?php echo $result['due']; ?></td>
+            <td>
+                <a href="<?php echo $this->url(array('controller' => 'staffsalary', 'action' => 'edit', 'id' => $result['salary_id'])); ?>">Edit </a>
+            </td>
+            <td>
+                <a href="<?php echo $this->url(array('controller' => 'staffsalary', 'action' => 'delete', 'id' => $result['salary_id'])); ?>">Delete</a>
+            </td>
+        </tr>
+    <?php endforeach; ?>
+</table>

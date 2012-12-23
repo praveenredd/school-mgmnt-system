@@ -1,0 +1,41 @@
+<?php $this->headLink()->appendStylesheet($this->baseUrl() . "/school/admin/css/table.css"); ?>
+<script type="text/javascript" src="<?php echo $this->baseUrl() . '/school/admin/js/jquery-1.8.js' ?>"></script>
+<script type="text/javascript" src="<?php echo $this->baseUrl() . '/school/admin/js/list.js' ?>"></script>
+<table cellspacing="0" >
+    <tr>
+        <th>Title</th>
+        <th>Content</th>
+        <th>parent menu</th>
+        <th>Entered Date</th>
+        <th>Updated Date</th>
+        <th>Publish</th>
+        <th>Detail</th>
+        <th>Edit</th>
+        <th>Delete</th>
+    </tr>
+    <?php foreach ($this->result as $result): ?>
+
+
+        <tr>
+            <th><?php echo $result['title']; ?></th>
+            <th><div class="desc-wrapper"><?php echo substr($result['content'], 0, 300) . "........."; ?></div></th>
+    <th><?php echo $result['parent_menu_id']; ?></th>
+    <th><?php echo $result['entered_date']; ?></th>
+    <th><?php echo $result['update_date']; ?></th>
+    <th>
+        <?php $permClass = ($result['sh'] == 'Y') ? "permitted" : "notpermitted"; ?>
+        <a class="<?php echo $permClass; ?>" href="<?php echo $this->url(array("controller" => "menu", "action" => "status", "id" => $result['menu_id'])); ?>"> &nbsp;&nbsp;&nbsp;&nbsp;</a>
+    </th>
+    <th>
+        <a href="<?php echo $this->url(array('controller' => 'menu', 'action' => 'detail', 'id' => $result['menu_id'])); ?>">Detail </a>
+    </th>
+    <th>
+        <a href="<?php echo $this->url(array('controller' => 'menu', 'action' => 'edit-content', 'id' => $result['menu_id'])); ?>">Edit </a>
+    </th>
+    <th>
+        <a href="<?php echo $this->url(array('controller' => 'menu', 'action' => 'delete-content', 'id' => $result['menu_id'])); ?>">Delete</a>
+    </th>
+    </tr>
+<?php endforeach; ?>
+</table>
+

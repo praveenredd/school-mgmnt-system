@@ -1,0 +1,28 @@
+<?php $sn = 1;
+$this->headLink()->appendStylesheet($this->baseUrl() . "/school/admin/css/table.css"); ?>
+<table align="right" width="100%" border="1px solid black">
+    <tr>
+        <th>Sn</th>
+        <th> Student    </th>
+        <th> Fee Title           </th> 
+        <th> Amount </th>
+        <th> Due </th>
+        <th>Edit</th>
+        <th>Delete</th>
+    </tr>
+<?php foreach ($this->result as $result): ?>
+        <tr>
+            <td><?php echo $sn++; ?></td>
+            <td><?php echo $result['student_name']; ?></td>
+            <td><?php echo $result['month']; ?></td>
+            <td><?php echo $result['amount']; ?></td>
+            <td><?php echo $result['due']; ?></td>
+            <td>
+                <a href="<?php echo $this->url(array('controller' => 'studentfee', 'action' => 'edit', 'id' => $result['fee_id'])); ?>">Edit </a>
+            </td>
+            <td>
+                <a href="<?php echo $this->url(array('controller' => 'studentfee', 'action' => 'delete', 'id' => $result['fee_id'])); ?>">Delete</a>
+            </td>
+        </tr>
+<?php endforeach; ?>
+</table>

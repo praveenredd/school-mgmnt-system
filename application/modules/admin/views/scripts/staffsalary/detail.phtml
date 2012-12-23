@@ -1,0 +1,74 @@
+<?php $this->headLink()->appendStylesheet($this->baseUrl() . "/school/admin/css/table.css"); ?> 
+<table id="CSS_Table">
+    <tr>
+        <th colspan="2"> Detail Information Of The Staff Salary</th>
+        <th width="10"> <a style="text-decoration:none" href="<?php echo $this->url(array('controller' => 'staffsalary', 'action' => 'list')); ?>">Back</a></th>  
+    </tr>
+    <tr>
+        <th> Roll No</th>
+        <td><?php echo $this->result['month']; ?></td>
+    </tr>
+    <tr>
+        <th> Full Name</th>
+        <td><?php echo $this->result['amount']; ?></td>
+    </tr>
+</table>
+<?php
+$arr = array();
+foreach ($this->feetypes as $type) {
+    $arr[$type['isMonthly']][] = $type;
+}
+?>
+<?php if ($arr['N']) { ?>
+    <table>
+        <caption><h3>Annual Fee</h3></caption>
+        <tr>
+            <th>Title</th>
+            <th>Due Amount</th>
+            <th>Discount</th>
+            <th>Total Amount</th>
+            <th>Paid?</th>
+            <th>Update</th>
+        </tr>
+        <?php foreach ($arr['N'] as $type) { ?>
+            <tr>
+                <td><?php echo $type['name']; ?></td>
+                <td></td>
+                <td></td>
+                <td><?php echo $type['amount']; ?></td>
+                <td></td>          
+                <td><input type="submit" name="submit"value ="Update" /></td>
+            </tr>
+        <?php } ?>
+    </table>
+    <?php
+}
+if ($arr['Y']) {
+    foreach ($arr['Y'] as $type) {
+        ?>
+        <table>
+            <caption><h3><?php echo $type['name']; ?></h3></caption>
+            <tr>
+                <th>Month</th>
+                <th>Due Amount</th>
+                <th>Discount</th>
+                <th>Total Amount</th>
+                <th>Paid?</th>
+                <th>Update</th>
+            </tr>
+            <?php foreach ($this->monthOptions as $option) { ?>
+                <tr>
+                    <td><?php echo $option; ?></td>
+                    <td></td>
+                    <td></td>
+                    <td><?php echo $type['amount']; ?></td>
+                    <td></td>            
+                    <td><input type="submit" name="submit" value="Update" /></td>
+                </tr>
+            <?php } ?>
+        </table>
+        <?php
+    }
+}
+?>
+

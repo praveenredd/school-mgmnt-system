@@ -1,0 +1,59 @@
+<form id="theme-form" action="" method="post">
+    <label>change theme</label>
+    <select name="theme" id="theme-select">
+        <?php foreach ($this->themeOptions as $key => $val) {
+            $selected  = ($this->theme==$key)? $selectd = "selected":"";
+            ?>
+            <option <?php echo $selected; ?> value="<?php echo $key; ?>"><?php echo $val; ?></option>
+            <?php
+        }
+        ?>
+    </select>
+</form>
+<div id="dashboard">
+    <form action="<?php echo $this->baseUrl() . '/admin/menu/content-search'; ?>" method="post">
+        <div id="all-search-wrapper">
+            <div id="search-field-wrapper">
+                <input type="text" name="searchtext" placeholder="Search Content or Navigation" id="search-all-content"/>
+            </div>
+            <div id="search-type-wrapper">
+                <select name="menu_type" id="menu-type">
+                    <option value="menu">Navigation</option>
+                    <option value="content">Content</option>
+                </select>
+            </div>
+            <div id="search-submit-wrapper">
+                <input type="submit" id="search-submit" name="submit" value="Search"/>
+            </div>
+            <div class="clear"></div>
+        </div>
+    </form>
+    <div id="search-result">
+        <div id="launcher">
+            <div id="content-image" class="launchButton" ><a href="<?php echo $this->baseUrl() . '/admin/menu/add-content'; ?>"><h4>Add Content </h4></a></div>
+            <div id="staff-attendance-image" class="launchButton" ><a href="<?php echo $this->baseUrl() . '/admin/staff/attendance'; ?>"><h4>Staff Attendance </h4></a></div>
+            <div id="fee-image" class="launchButton"><a href="<?php echo $this->baseUrl() . '/admin/studentfee'; ?>"><h4> Student Fee </h4></a></div>
+            <div id="gallery-image" class="launchButton"><a href="<?php echo $this->baseUrl() . '/admin/gallery/list'; ?>"><h4> Photo Gallery </h4></a></div>
+            <div id="student-attendance-image" class="launchButton"><a href="<?php echo $this->baseUrl() . '/admin/student/attendance'; ?>"><h4>Student Attendance </h4></a></div>
+            <div id="upgrade-class-image" class="launchButton"><a href="<?php echo $this->baseUrl() . '/admin/student/upgrade'; ?>"><h4>Upgrade Class</h4></a></div>
+            <div id="news-image" class="launchButton"><a href="<?php echo $this->baseUrl() . '/admin/news/add'; ?>"><h4>Add News feed</h4></a></div>
+            <div id="add-student-image" class="launchButton"><a href="<?php echo $this->baseUrl() . '/admin/student/add'; ?>"><h4>Add Student</h4></a></div>
+            <div id="add-finance-image" class="launchButton"><a href="<?php echo $this->baseUrl() . '/admin/finance/list'; ?>"><h4>School Finance</h4></a></div>
+            <div id="add-result-image" class="launchButton"><a href="<?php echo $this->baseUrl() . '/admin/result'; ?>"><h4>Add Result</h4></a></div>
+            <div id="add-subject-image" class="launchButton"><a href="<?php echo $this->baseUrl() . '/admin/subject/add'; ?>"><h4>Add Subject</h4></a></div>
+            <div id="search-result-image" class="launchButton"><a href="<?php echo $this->baseUrl() . '/admin/result/search'; ?>"><h4>Search Result</h4></a></div>
+            <div id="add-image-image" class="launchButton"><a href="<?php echo $this->baseUrl() . '/admin/image/add'; ?>"><h4>Add Image</h4></a></div>
+            <div id="staff-image" class="launchButton"><a href="<?php echo $this->baseUrl() . '/admin/staff/add'; ?>"><h4>Add Staff</h4></a></div>
+            <div id="theme-image" class="launchButton"><a href="<?php echo $this->baseUrl() . '/admin/index/theme'; ?>"><h4>Change Theme</h4></a></div>
+        </div>
+    </div>
+</div>
+</div>
+<?php $this->headScript()->appendFile($this->baseUrl() . '/school/admin/js/content-search.js'); ?>
+<script type="text/javascript">
+    $(document).ready(function(){
+        $("#theme-select").change(function(){
+            $("#theme-form").submit();
+        });
+    });
+</script>

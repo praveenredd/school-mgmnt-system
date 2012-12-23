@@ -1,0 +1,45 @@
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <?php echo $this->headLink()
+                        ->prependStylesheet($this->baseUrl() . '/school/black/css/bootstrap-responsive.min.css')
+                        ->prependStylesheet($this->baseUrl() . '/school/black/css/style.css')
+                        ->prependStylesheet($this->baseUrl() . '/school/black/css/bootstrap.min.css') ?>
+
+        <!-- Scripts -->
+        <?php echo $this->headScript()->prependFile($this->baseUrl() . '/school/black/js/html5.js', 'text/javascript', array('conditional' => 'lt IE 9',))
+                                      ->prependFile($this->baseUrl() . '/common/js/jquery-1.7.2.min.js') ?>
+    </head>
+    <body>
+        <div class="navbar navbar-fixed-top">
+            <div class="navbar-inner">
+                <div class="container">
+                    <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </a>
+                    <?php $config = new Zend_Config_Ini(BASE_PATH.DIRECTORY_SEPARATOR.'configs'.DIRECTORY_SEPARATOR.'class.ini','name'); ?>
+                    <a class="brand" href="<?php echo "#" ?>"><?php echo $config->school->name; ?></a>
+                    <div class="nav-collapse">
+                        <ul class="nav">
+                            <li class="active"><a href="<?php echo "#" ?>"> Home </a></li>
+                            <li class="active"><a href="<?php echo "#" ?>"> Admission </a></li>
+                            <li class="active"><a href="<?php echo "#" ?>"> Academics</a></li>
+                            <li class="active"><a href="<?php echo "#" ?>"> Contact Us </a></li>
+                            <li class="active"><a href="<?php echo "#" ?>">Photo Gallery</a></li>
+                        </ul>
+                    </div><!--/.nav-collapse -->
+                </div>
+            </div>
+        </div>
+        <div class="container">
+            <?php echo $this->layout()->content; ?>
+            <hr>
+            <footer>
+                <p>&copy;  2012 Fourfox Inc. <?php echo $this->translate('All rights reserved.') ?></p>
+            </footer>
+        </div> <!-- /container -->
+        <?php echo $this->inlineScript() ?>
+    </body>
+</html>

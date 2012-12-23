@@ -1,0 +1,25 @@
+<div id="search-result">
+    <?php
+    if ($this->results) {
+        foreach ($this->results as $result) {
+            ?>
+            <div class="search-result-wrapper">
+                <?php
+                if ($result['controller'] && $result['action']) {
+                    $url = "/" . $result['module'] . "/" . $result['controller'] . '/' . $result['action'];
+                } else {
+                    $title = str_replace(" ", "_", $result['title']);
+                    $url = "/index/content/display/" . $title . '-' . base64_encode(base64_encode(base64_encode($result['menu_id'] . '-' . $title)));
+                }
+                $url = $this->baseUrl() . $url;
+                ?>
+                <h3><a href="<?php echo $url; ?>"><?php echo $result['title']; ?></a></h3>
+                <div class="short-desc">
+                    <?php echo $result['content']; ?>
+                </div>
+            </div>
+            <?php
+        }
+    }
+    ?>
+</div>

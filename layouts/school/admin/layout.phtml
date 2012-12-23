@@ -1,0 +1,58 @@
+<html>
+    <head>
+        <title>
+            School Management System
+        </title>
+        <script type="text/javascript" src="<?php echo $this->baseUrl() . '/common/js/jquery-1.7.2.min.js'; ?>"></script>
+        <?php
+        $themeModel = new Admin_Model_Theme();
+        $theme = $themeModel->getActive("N");
+        $theme = "theme_".$theme.".css";
+        $this->headScript()->appendFile($this->baseUrl() . "/common/js/jquery-ui-1.8.21.custom.min.js");
+        $this->headLink()->appendStylesheet($this->baseUrl() . "/school/admin/css/style.css");
+        $this->headLink()->appendStylesheet($this->baseUrl() . "/school/admin/css/".$theme);
+        $this->headLink()->appendStylesheet($this->baseUrl() . "/common/css/jquery-ui-1.8.21.custom.css");
+        echo $this->headLink();
+        echo $this->headScript();
+        ?>
+        <script type="text/javascript">
+            site = {
+                'baseUrl': "<?php echo $this->baseUrl(); ?>"
+            };
+        </script>
+    </head>
+    <body>
+        <div id="top-navigation">
+            <div id="header-nav">
+                <ul class="nav">
+                    <li><a href="<?php echo $this->baseUrl() . '/admin'; ?>">Dashboard</a></li>
+                    <li><a href="<?php echo $this->baseUrl() . '/admin/student/list'; ?>">Students</a></li>
+                    <li><a href="<?php echo $this->baseUrl() . '/admin/result/'; ?>">Add Result</a></li>
+                    <li><a href="<?php echo $this->baseUrl() . '/admin/staff/list'; ?>">Staff</a></li>
+                    <li><a href="<?php echo $this->baseUrl() . '/admin/subject/list'; ?>">Subjects</a></li>
+                    <li><a href="<?php echo $this->baseUrl() . '/admin/news/list'; ?>">News feed</a></li>
+                    <?php if (Zend_Auth::getInstance()->hasIdentity()) { ?>
+                        <li><a href="<?php echo $this->baseUrl() . '/admin/login/logout'; ?>">Logout</a></li>
+                    <?php } ?>
+                </ul>
+            </div>   
+
+        </div>
+        <div id="container">
+            <div id="flash-messages">
+                <?php
+                $flashMessenger = $this->flashMessages();
+                print $flashMessenger->getMessages();
+                ?>
+            </div>
+            <div id="application-content">
+                <?php echo $this->layout()->content; ?>
+            </div>
+        </div>
+        <div id="footer-wrapper">
+            <div id="footer-nav">
+                Copyright (c) Fourfox Inc. 2012
+            </div>
+        </div>
+    </body>
+</html>

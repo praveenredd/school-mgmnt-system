@@ -1,0 +1,292 @@
+<?php $this->headLink()->appendStylesheet($this->baseUrl() . "/school/admin/css/table.css"); ?> 
+<script type="text/javascript" src="<?php echo $this->baseUrl() . '/common/js/jquery-ui-1.8.21.custom.min.js'; ?>"></script> 
+<script type="text/javascript" src="<?php echo $this->baseUrl() . '/common/js/jquery-1.7.2.min.js'; ?>"></script> 
+<table id="CSS_Table">
+    <tr>
+        <th colspan="2"> Detail Information Of The Students</th>
+        <th width="10"> <a style="text-decoration:none" href="<?php echo $this->url(array('controller' => 'student', 'action' => 'list')); ?>">Back</a></th>  
+    </tr>
+    <tr>
+        <th> Roll No</th>
+        <td><?php echo $this->result['roll_no']; ?></td>
+    </tr>
+    <tr>
+        <th> Full Name</th>
+        <td><?php echo $this->result['full_name']; ?></td>
+    </tr>
+    <tr>
+        <th> Sex </th>
+        <td><?php echo $this->result['sex']; ?></td>
+    </tr>
+    <tr>
+        <th> Date of Birth </th>
+        <td><?php echo $this->result['dob']; ?></td>
+    </tr>
+    <tr>
+        <th> Email </th>
+        <td><?php echo $this->result['email']; ?></td>
+    </tr>
+    <tr>
+        <th> Phone </th>
+        <td><?php echo $this->result['phone']; ?></td>
+    </tr>
+    <tr>
+        <th> Guardian Name </th>
+        <td><?php echo $this->result['guardian_name']; ?></td>
+    </tr>
+    <tr>
+        <th> Year </th>
+        <td><?php echo $this->result['year']; ?></td>
+    </tr>
+    <tr>
+        <th> Class </th>
+        <td><?php echo $this->result['grade']; ?></td>
+    </tr>
+    <tr>
+        <th> Section </th>
+        <td><?php echo $this->result['section']; ?></td>
+    </tr>
+</table>
+<input type="hidden" class="hidden-student-id" value="<?php echo $this->result['student_id']; ?>"/>
+<hr />
+<?php
+$arr = array();
+$fees = array();
+if ($this->fees) {
+    foreach ($this->fees as $fee) {
+        if ($fee['month'] == 'annual') {
+            $fees['N'][$fee['fee_type_id']] = $fee;
+        } else {
+            $fees['Y'][$fee['fee_type_id']][$fee['month']] = $fee;
+        }
+    }
+}
+//print"<pre>";
+//print_r($fees);exit;
+foreach ($this->feetypes as $type) {
+    $arr[$type['isMonthly']][] = $type;
+}
+if (array_key_exists("N", $arr)) {
+    ?>
+    <table>
+        <caption><h3>Annual Fee</h3></caption>
+        <tr>
+            <th>Title</th>
+            <th>Amount</th>
+            <th>Due Amount</th>
+            <th>Discount</th>
+            <th>Total Amount</th>
+            <th>Paid?</th>
+            <th>Update</th>
+        </tr>
+        <?php foreach ($arr['N'] as $type) { ?>
+            <tr>
+                <td>
+                    <input type="hidden" class="hidden-month" value="annual"/>
+                    <input type="hidden" class="hidden-fee-type-id" value="<?php echo $type['fee_type_id']; ?>"/>
+                    <?php echo $type['name']; ?></td>
+                <td><?php if ($fees['N'][$type['fee_type_id']]['paid'] == "N") { ?><input type="text" class = "amount-paid" name="amount"><?php } ?>
+                </td>
+                <td>
+                    <div class="due-amount-to">
+                        <?php
+                        $feeId = 0;
+                        $discount = 0;
+                        $paid = "N";
+                        if (isset($fees['N'])) {
+                            if (isset($fees['N'][$type['fee_type_id']])) {
+                                echo $fees['N'][$type['fee_type_id']]['due'];
+                                ?>
+                                <input class="due-amount-from" name="due-amount" type="hidden" value="<?php echo $fees['N'][$type['fee_type_id']]['due']; ?>" />
+                                <?php
+                                $feeId = $fees['N'][$type['fee_type_id']]['fee_id'];
+                                $discount = $fees['N'][$type['fee_type_id']]['discount'];
+                                $paid = $fees['N'][$type['fee_type_id']]['paid'];
+                            }
+                        }
+                        ?>
+                    </div>
+                    <input class="fee_id" name="fee_id" type="hidden" value="<?php echo $feeId; ?>" />                           
+                    <input class="due_amount" type="hidden" name="due_amount" />
+                </td>
+                <td>
+                    <?php if ($fees['N'][$type['fee_type_id']]['paid'] == "N") { ?> <input type="text" class = "amount-discount" name="amount-discount" value="<?php echo $discount; ?>"> <?php } ?>
+                </td>
+                <td><?php echo $type['amount']; ?>
+                    <input class="total_amount" type="hidden" name="total_amount" value="<?php echo $type['amount']; ?>"/> </td>
+                <td class="<?php
+            if ($paid == "Y") {
+                echo "permitted";
+            } else {
+
+                echo "notpermitted";
+            }
+                    ?>"><?php //echo $paid;  ?></td>          
+                <td>
+                    <input class="student-fee-detail" type="submit" name="submit"value ="Update" />
+
+                </td>
+            </tr>
+
+        <?php } ?>
+    </table>
+    <?php
+}
+if (array_key_exists("Y", $arr)) {
+    foreach ($arr['Y'] as $type) {
+        ?>
+        <table>
+            <caption><h3><?php echo $type['name']; ?></h3></caption>
+            <tr>
+                <th>Month</th>
+                <th>Amount</th>
+                <th>Due Amount</th>
+                <th>Discount</th>
+                <th>Total Amount</th>
+                <th>Paid?</th>
+                <th>Update</th>
+            </tr>
+            <?php foreach ($this->monthOptions as $option) { ?>
+                <tr>
+                    <td>
+                        <input type="hidden" class="hidden-fee-type-id" value="<?php echo $type['fee_type_id']; ?>"/>
+                        <input type="hidden" class="hidden-month" value="<?php echo $option; ?>"/>
+                        <?php echo $option; ?>
+                    </td>
+
+
+
+
+                    <?php
+                    $paid = "N";
+                    if (isset($fees['Y'])) {
+                        if (isset($fees['Y'][$type['fee_type_id']])) {
+                            if (isset($fees['Y'][$type['fee_type_id']][$option])) {
+                                $currentFee = $fees['Y'][$type['fee_type_id']][$option];
+                                $paid = $currentFee['paid'];
+                            }
+                        }
+                    }
+                    ?>
+                    <td> <?php if ($paid == "N") { ?><input type="text" class = "amount-paid" name="amount" /><?php } ?> </td>
+                    <?php ?>
+
+                    <td>
+                        <div class="due-amount-to">
+                            <?php
+                            $due = 0;
+                            $totalAmount = 0;
+                            $discount = 0;
+                            $feeId = 0;
+                            $paid = "N";
+                            if (isset($fees['Y'])) {
+                                if (isset($fees['Y'][$type['fee_type_id']])) {
+                                    if (isset($fees['Y'][$type['fee_type_id']][$option])) {
+                                        ?>
+                                        <input class="due-amount-from" name="due-amount" type="hidden" value="<?php echo $fees['Y'][$type['fee_type_id']][$option]['due']; ?>" />
+                                        <?php
+                                        echo $fees['Y'][$type['fee_type_id']][$option]['due'];
+                                        $currentFee = $fees['Y'][$type['fee_type_id']][$option];
+                                        $totalAmount = $currentFee['amount'];
+                                        $due = $currentFee['due'];
+                                        $discount = $currentFee['discount'];
+                                        $feeId = $currentFee['fee_id'];
+                                        $paid = $currentFee['paid'];
+                                    }
+                                }
+                            }
+                            ?>
+                        </div>
+                        <input class="fee_id" name="fee_id" type="hidden" value="<?php echo $feeId; ?>" />                           
+                        <input class="aleardy-paid" name="already-paid" type="hidden" value="<?php echo $due; ?>" />
+                        <input class="due_amount" type="hidden" name="due_amount" />
+                    </td>
+                    <td><?php if ($paid == "N") { ?> <input type="text" class = "amount-discount" name="amount-discount" value="<?php echo $discount; ?>"> <?php } ?></td>
+                    <td><?php echo ($totalAmount) ? $totalAmount : $type['amount']; ?>
+                        <input class="total_amount" type="hidden" name="total_amount" value="<?php echo $type['amount']; ?>"/>
+                    </td>
+                    <td class="<?php
+                if ($paid == "Y") {
+                    echo "permitted";
+                } else {
+
+                    echo "notpermitted";
+                }
+                            ?>"><?php //echo $paid;   ?></td>            
+                    <td><input class="student-fee-detail" type="submit" name="submit" value="Update" /></td>
+                </tr>
+            <?php } ?>
+        </table>
+        <?php
+    }
+}
+?>
+<script type="text/javascript">
+    $(document).ready(function(){
+        $(".amount-paid").live("blur",function(){
+            var $that = $(this);
+            var amount = Number($.trim($(this).val()));
+            //            if(amount==0){
+            //                return false;
+            //            }
+            var fee_id = Number($(this).parents("tr:first").find(".fee_id").val());
+            var totalamount = Number($(this).parents("tr:first").find(".total_amount").val());
+            var dueamount = Number($(this).parents("tr:first").find(".due-amount-from").val());
+            var discountamount = Number($(this).parents("tr:first").find(".amount-discount").val());
+            if(fee_id == "0"){
+                var newdueamount = totalamount - amount - discountamount ;
+                // console.log(dueamount);
+                $that.parents("tr:first").find(".due-amount-to").html(newdueamount);
+            }
+            else if(fee_id !="0"){
+                var newdueamount = dueamount - amount;
+                console.log(dueamount);
+                // console.log(dueamount);
+                $that.parents("tr:first").find(".due-amount-to").html(newdueamount);
+            }
+        }); 
+        $(".amount-discount").live("blur",function(){
+            var $that = $(this);
+            var fee_id = Number($(this).parents("tr:first").find(".fee_id").val());
+            var discountamount = Number($.trim($(this).val()));
+            //            if(discountamount==0){
+            //                return false;
+            //            }
+            var totalamount = Number($(this).parents("tr:first").find(".total_amount").val());
+            var amount = Number($(this).parents("tr:first").find(".amount-paid").val());
+            var dueamount = Number($(this).parents("tr:first").find(".due-amount-from").val());
+            if(fee_id == '0'){
+                var newdueamount = totalamount - amount - discountamount;
+                // console.log(newdueamount);
+                $that.parents("tr:first").find(".due-amount-to").html(newdueamount);
+            }
+            else if(fee_id!= '0'){
+                var newdueamount = dueamount - amount - discountamount;
+                // console.log(newdueamount);
+                $that.parents("tr:first").find(".due-amount-to").html(newdueamount);  
+                
+            }
+        }); 
+        $('.student-fee-detail').live("click",function(e){
+            e.preventDefault();
+            var $firstTr = $(this).parents("tr:first");
+            var discount = Number($firstTr.find(".amount-discount").val());
+            var amountPaid = Number($firstTr.find(".amount-paid").val());
+            var studentId = Number($(".hidden-student-id").val());
+            var feetypeId = Number($firstTr.find(".hidden-fee-type-id").val());
+            var month = $.trim($firstTr.find(".hidden-month").val());
+            var feeId = $.trim($firstTr.find(".fee_id").val());
+            $.ajax({
+                method:'post',
+                dataType:'json',
+                data :'discount='+discount+'&amount='+amountPaid+'&student='+studentId+'&fee_type_id='+feetypeId+'&month='+month+'&fee_id='+feeId,
+                url:site.baseUrl+"/admin/student/studentfee-detail/format/json",
+                success:function(res){
+                    
+                }
+            });
+        });
+    }); 
+</script>
+
+

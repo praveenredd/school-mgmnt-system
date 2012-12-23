@@ -1,0 +1,9 @@
+<?php echo $this->headScript()->appendFile($this->baseUrl() . '/common/ckeditor/ckeditor.js');  ?>
+<fieldset>
+    <legend><h2>Add News</h2></legend>
+    <?php
+    echo $this->form; 
+    $this->ckeditor = 'ckeditor';
+    echo $this->setupEditor('content');
+    ?>
+</fieldset>

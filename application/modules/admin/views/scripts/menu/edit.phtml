@@ -1,0 +1,35 @@
+<?php echo $this->headScript()->appendFile($this->baseUrl() . '/common/ckeditor/ckeditor.js'); ?>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <title></title>
+    </head>
+    <body>
+        <?php
+        echo $this->form;
+        $this->ckeditor = 'ckeditor';
+        echo $this->setupEditor('content');
+        ?>
+        <?php //var_dump($this->id); exit; ?>
+    </body>
+</html>
+<script type="text/javascript">
+    $(document).ready(function (){
+        $('#menu_type').live("change", function(){
+            var $that = $(this);
+            var menu = $(this).val();
+            var firstmenu = <?php echo $this->id; ?>
+            // console.log(firstmenu); return false;
+            if( menu == firstmenu ){
+                alert("Sorry Parent Menu is same.Please Choose different Parent Menu");
+               $('#menu_type').val("");
+            }
+           
+          
+        });
+    
+    });
+
+
+
+</script>

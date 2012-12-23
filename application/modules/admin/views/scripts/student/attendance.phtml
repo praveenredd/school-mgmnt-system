@@ -1,0 +1,73 @@
+<?php $this->headLink()->appendStylesheet($this->baseUrl() . "/school/admin/css/table.css"); ?> 
+<?php $form = $this->form->getElements(); ?>
+<h2>Search Student For Attendance </h2>
+<form action="" method="post"> 
+    <div id="divdropwrapper">
+        <div class="search-item-wrapper">
+            <label>Year</label>
+            <?php echo $form['year']; ?>
+        </div>
+        <div class="search-item-wrapper">
+            <label>Class</label>
+            <?php echo $form['grade']; ?>
+        </div>
+        <div class="search-item-wrapper">
+            <label>Section</label>
+            <?php echo $form['section']; ?>
+        </div>
+        <div class="search-item-wrapper">
+            <br />
+            <?php echo $form['Search']; ?> 
+        </div>
+        <div class="clear"></div>
+    </div>
+</form>    
+<form action="" method="post">
+    <?php if ($this->searchResults) { ?>
+        <table>
+            <tr>
+                <th>
+                    Roll No
+                </th>
+                <th>
+                    Full Name
+                </th>
+                <th>
+                    <a href="#" id="checkbox-all" name="all-checkbox">Check All</a>
+                </th>
+            </tr>
+            <?php foreach ($this->searchResults as $result) { ?>
+                <tr>
+                    <td><?php echo $result['roll_no']; ?></td>
+                    <td><?php echo $result['full_name']; ?></td>  
+                    <td><input class="check-student" type="checkbox" name="student[<?php echo $result['student_id'] ?>]" /></td>
+
+                </tr>
+            <?php } ?>
+            <th>
+                <select name="date"/>
+            <option value="<?php echo $todaydate = date("Y-m-d") ?>">Today</option>
+            <option value="<?php echo $date = date('Y-m-d', strtotime(' -1 day')); ?>">Yesterday</option>
+            <option value="<?php echo $date = date('Y-m-d', strtotime(' -2 day')); ?>">Two Days Ago</option>
+            <option value="<?php echo $date = date('Y-m-d', strtotime(' -3 day')); ?>">Three Days Ago</option>
+            </select>
+            </th>
+        </table>
+        <input type="hidden" name="year" value="<?php echo $_POST['year']; ?>" />
+        <input type="hidden" name="grade" value="<?php echo $_POST['grade']; ?>" />
+        <input type="hidden" name="section" value="<?php echo $_POST['section']; ?>" />
+        <input type="submit" name="form-submit" value="Save" />
+    <?php } ?>
+</form>
+<script type="text/javascript">
+    $(document).ready(function() {
+        $("#checkbox-all").click(function() {
+            if ($(".check-student").is(":checked")) {
+                $(".check-student").removeAttr('checked');
+            } else {
+                $(".check-student").attr("checked", "checked");
+            }
+
+        });
+    });
+</script>

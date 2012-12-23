@@ -1,0 +1,54 @@
+<?php $this->headLink()->appendStylesheet($this->baseUrl() . "/school/admin/css/table.css"); ?>
+<form action="" method="post">
+    <?php if ($this->results) { ?>
+        <table>
+            <caption><h2>Attendance Of Staffs</h2></caption>
+            <tr>
+                <th>
+                    Full Name
+                </th>
+                <th>
+                    Address
+                </th>
+                <th>
+                    Position
+                </th>
+                <th>
+                    <a href="#" id="checkbox-all" name="all-checkbox">Check All</a>
+                </th>
+                <th>
+                    <select name="date"/>
+                    <option value="<?php echo $todaydate = date("Y-m-d") ?>">Today</option>
+                    <option value="<?php echo $date = date('Y-m-d', strtotime(' -1 day'));?>">Yesterday</option>
+                    <option value="<?php echo $date = date('Y-m-d', strtotime(' -2 day'));?>">Two Days Ago</option>
+                    <option value="<?php echo $date = date('Y-m-d', strtotime(' -3 day'));?>">Three Days Ago</option>
+                        </select>
+                </th>
+            </tr>
+            <?php foreach ($this->results as $result) { ?>
+                <tr>
+                    <td><?php echo $result['full_name']; ?></td>
+                    <td><?php echo $result['address']; ?></td>
+                    <td><?php echo $result['position']; ?></td>
+                    <td><input class="checek-staff" type="checkbox" name="student[<?php echo $result['staff_id'] ?>]" /></td>
+                </tr>
+            <?php } ?>
+        </table>
+    <!--        <input type="hidden" name="year" value="<?php //echo $_POST['year'];  ?>" />
+        <input type="hidden" name="grade" value="<?php //echo $_POST['grade'];  ?>" />
+        <input type="hidden" name="section" value="<?php //echo $_POST['section'];  ?>" />-->
+        <input type="submit" name="form-submit" value="Save" />
+    <?php } ?>
+</form>
+<script type="text/javascript">
+    $(document).ready(function() {
+        $("#checkbox-all").click(function() {
+            if ($(".checek-staff").is(":checked")) {
+                $(".checek-staff").removeAttr('checked');
+            } else {
+                $(".checek-staff").attr("checked", "checked");
+            }
+
+        });
+    });
+</script>

@@ -1,0 +1,87 @@
+<?php $this->headLink()->appendStylesheet($this->baseUrl() . "/school/admin/css/table.css"); ?>
+<?php
+$form = $this->form->getElements();
+?>
+<div id="exam-result-all">
+    <h2>Search Student to Add Result</h2>
+    <form action="" method="post"> 
+        <div id="divdropwrapper">
+            <div class="search-item-wrapper">
+                <label>Year</label>
+                <?php echo $form['year']; ?>
+            </div>
+            <div class="search-item-wrapper">
+                <label>Class</label>
+                <?php echo $form['grade']; ?>
+            </div>
+            <div class="search-item-wrapper">
+                <label>Section</label>
+                <?php echo $form["section"] ?>
+            </div>
+            <div class="search-item-wrapper">
+                <br />
+                <?php echo $form['Search']; ?> 
+            </div>
+            <div class="clear"></div>
+        </div>
+    </form>    
+    <div class="clear"></div>
+    <?php if ($this->searchResults) { ?>
+        <fieldset>
+            <legend><h2>Add Result of Student</h2></legend>
+            <form name="result-add" action="" method="post">
+                <input type="hidden" value="<?php echo $_POST['section'] ?>" name="section" />
+                <?php if ($this->searchResults) { ?>
+                    <?php $addForm = $this->addForm->getElements(); ?>
+                    <?php echo $addForm["subject_id"]; ?>
+                    <?php echo $addForm["examtype_id"]; ?>
+                    <?php echo $addForm['grade']; ?>
+                    <?php echo $addForm['year']; ?>
+                    <div class="clear"></div>
+                    <?php $i = 0; ?>
+
+                    <table>
+                        <tr>
+                            <th>Roll no</th>
+                            <th>Name</th>
+                            <th>Enter Marks</th>
+                            <th>Remarks</th>
+                        </tr>
+                        <?php foreach ($this->addForm->getSubForms() as $subForm):
+                            ?>
+                            <tr>
+                                <td>
+                                    <div class="marks-wrapper">
+                                        <?php echo $this->searchResults[$i]['roll_no']; ?>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="marks-wrapper student-list">
+                                        <?php echo $subForm->result_id; ?>
+                                        <?php echo $this->searchResults[$i]["full_name"]; ?>
+                                        <?php echo $subForm->student_id->setValue($this->searchResults[$i]["student_id"]); ?>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="marks-wrapper">
+                                        <?php echo $subForm->marks; ?>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="marks-wrapper">
+                                        <?php echo $subForm->remarks; ?>
+                                    </div>
+                                </td>
+                            </tr>
+                            <?php
+                            $i++;
+                        endforeach;
+                        ?>
+
+                    </table>
+                <?php } ?>
+                <?php echo $addForm['Search']; ?>
+            </form>
+        </fieldset>
+    <?php } ?>
+</div>   

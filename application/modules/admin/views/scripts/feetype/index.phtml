@@ -1,0 +1,36 @@
+<?php
+$sn = 1;
+$this->headLink()->appendStylesheet($this->baseUrl() . "/school/admin/css/table.css");
+?>
+<table align="right" width="100%" border="1px solid black">
+    <tr>
+        <th>Sn</th>
+        <th>Fee Title</th>
+        <th>Grade</th> 
+        <th>Amount</th>
+        <th>Monthly</th>
+        <th>Edit</th>
+        <th>Delete</th>
+    </tr>
+    <?php foreach ($this->result as $result): ?>
+        <tr>
+            <td><?php echo $sn++; ?></td>
+            <td><?php echo $result['name']; ?></td>
+            <td><?php echo $result['grade']; ?></td>
+            <td><?php echo $result['amount']; ?></td>
+            <td><?php
+    if ($result['isMonthly'] == "Y") {
+        echo "Yes";
+    } else {
+        echo "No";
+    }
+        ?></td>
+            <td>
+                <a href="<?php echo $this->url(array('controller' => 'feetype', 'action' => 'edit', 'id' => $result['fee_type_id'])); ?>">Edit </a>
+            </td>
+            <td>
+                <a href="<?php echo $this->url(array('controller' => 'feetype', 'action' => 'delete', 'id' => $result['fee_type_id'])); ?>">Delete</a>
+            </td>
+        </tr>
+    <?php endforeach; ?>
+</table>

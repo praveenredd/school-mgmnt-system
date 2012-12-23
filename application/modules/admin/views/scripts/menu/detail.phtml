@@ -1,0 +1,31 @@
+<?php $this->headLink()->appendStylesheet($this->baseUrl() . "/school/admin/css/resultsearch.css"); ?>
+<script type="text/javascript" src="<?php echo $this->baseUrl() . '/school/admin/js/jquery-1.8.js' ?>"></script>
+<script type="text/javascript" src="<?php echo $this->baseUrl() . '/school/admin/js/list.js' ?>"></script>
+
+
+<div class="label-select">
+    <label>Title:</label>
+    <div class="result_data"><?php echo $this->result['title']; ?></div>
+</div> 
+<div class="label-select">
+    <label>parent menu:</label>
+    <div class="result_data">
+        <?php echo $this->result['parent_menu_id']; ?> 
+    </div></div> 
+<div class="back-wrapper">
+    <div class="result_data"> <a href="<?php echo $this->url(array('controller' => 'menu', 'action' => 'content')); ?>">Back </a></div>
+</div>  
+<div class="clear"></div>
+&nbsp;&nbsp;&nbsp;
+<div id="divheader">
+    <label><h3>Content</h3></label>
+</div> 
+&nbsp;
+&nbsp;&nbsp;
+<div class="clear"></div>
+
+
+
+
+<div class="desc-wrapper"><?php echo ($this->result['content']); ?></div>
+
